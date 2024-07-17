@@ -1,0 +1,4 @@
+When page loads, it shows mean kitty saying something insulting, button is enabled, timer and prompt are hidden
+When pet me button clicked, button disables, kitty insult hides, and typing prompt and timer show, and timer starts
+when timer hits zero, prompt and timer hide and kitty insult appears, and button enables
+when textbox === what kitty says, prompt and timer disappear, kitty message appears "purrrrr", button enables
