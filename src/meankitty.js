@@ -7,7 +7,8 @@ import {
   Link,
   Box,
   Typography,
-  Container
+  Container,
+  Button
 } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { indigo } from '@mui/material/colors';
@@ -38,8 +39,10 @@ const MeanKitty = () => {
       email: '',
       password: ''
     });
-    const [emailError, setEmailError] = useState('');
-    const [passwordError, setPasswordError] = useState('');
+    const [showInsult, setShowInsult] = useState(true);
+    const [buttonEnabled, setButtonEnabled] = useState(true);
+    const [showPrompt, setShowPrompt] = useState(false);
+    const [showTimer, setShowTimer] = useState(false);
 
     //check if the user signed up. If so, show the snackbar and update local storage so the snackbar won't show again upon page refresh
     const justSignedUp = localStorage.getItem('justSignedUp');
@@ -48,8 +51,6 @@ const MeanKitty = () => {
 
     const handleChange = (e) => {
       setValues({ ...values, [e.target.name]: e.target.value});
-      setEmailError('');
-      setPasswordError('');
     };
 
     const handleClose = () => {
@@ -62,20 +63,16 @@ const MeanKitty = () => {
       const regEmail = /email/;
       let reArray = regEmail.exec(regMessage);
       if (reArray !== null) { //errorMessage contains email
-        setEmailError(errorMessage);
         return;
       }
       const regPassword = /password/;
       reArray = regPassword.exec(regMessage);
       if (reArray !== null) { //errorMessage contains password
-        setPasswordError(errorMessage);
       }
     };
 
     const handleSubmit = async (e) => {
       e.preventDefault();
-      setEmailError('');
-      setPasswordError('');
       try {
         localStorage.setItem('isAuth', 'true');
       } catch(error) {
@@ -115,6 +112,17 @@ const MeanKitty = () => {
                 alt={ "Face of a cat" }
                 style={{ width: '100%' }}
               />
+              { showInsult ? <Typography component="body1" role="insult">hiiii</Typography> : <></> }
+              { showPrompt ? <Typography component="body1" role="prompt">sup, bish</Typography> : <></> }
+              { showTimer
+                ?<Box role="timer">
+                  <Countdown 
+                    date={Date.now() + 10000} 
+                    renderer={ renderer }
+                  />
+                </Box>
+                :<></>
+              }
               <TextField
                 margin="normal"
                 required
@@ -126,10 +134,7 @@ const MeanKitty = () => {
                 onChange={ (e) => handleChange(e) }
                 autoFocus
               />
-              <Countdown 
-                date={Date.now() + 10000} 
-                renderer={ renderer }
-              />
+              { buttonEnabled ? <Button variant="contained">Pet the kitty</Button> : <Button variant="contained" disabled>Pet the kitty</Button> }
             </Box>
           </Box>
           <Copyright sx={{ mt: 8, mb: 4 }} />
