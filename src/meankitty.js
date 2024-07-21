@@ -49,24 +49,29 @@ const MeanKitty = () => {
       setInputValue(userInput);
       if (userInput === promptValue) {
         setButtonRole('button-enabled');
+        setInputEnabled(false);
         setShowPrompt(false);
         setShowTimer(false);
         setInsultValue('purrr');
         setShowInsult(true);
+        setInputValue('');
       }
     };
 
     const handleClick = () => {
       setButtonRole('button-disabled');
+      setInputEnabled(true);
       setShowInsult(false);
       setShowPrompt(true);
       setShowTimer(true);
 
       setTimeout(() => {
         setButtonRole('button-enabled');
+        setInputEnabled(false);
         setShowPrompt(false);
         setShowTimer(false);
         setShowInsult(true);
+        setInputValue('');
       }, 5000)
     };
 

@@ -6,7 +6,7 @@ import userEvent from '@testing-library/user-event';
 describe("When the page initializes", () => {
     render(<MeanKitty />);
 
-    it("shows the button and input fields are enabled, the insult shows, and the prompt and timer are hidden", () => {
+    it("the button is enabled, the input field is disabled, the insult shows, and the prompt and timer are hidden", () => {
         const button = screen.getByRole('button-enabled');
         expect(button).toBeEnabled();
 
@@ -23,9 +23,9 @@ describe("When the page initializes", () => {
         expect(timer).not.toBeInTheDocument();
     });
 });
-/*
+
 describe("When the user clicks the button", () => {
-    it("disables the button, hides the insult, and shows the prompt and timer", async () => {
+    it("disables the button, enables the input field, hides the insult, and shows the prompt and timer", async () => {
         render(<MeanKitty />);
     
         //simulate clicking the button
@@ -35,6 +35,9 @@ describe("When the user clicks the button", () => {
         //button should disable after clicking it
         button = await screen.findByRole('button-disabled');
         expect(button).toBeDisabled();
+
+        const input = screen.getByRole('textbox');
+        expect(input).toBeEnabled();
         
         //insult hides
         await waitFor(() => {
@@ -52,7 +55,7 @@ describe("When the user clicks the button", () => {
 });
 
 describe("When the timer reaches zero", () => {
-    it("enables the button, hides the prompt and timer, and shows the insult", async () => {
+    it("enables the button, disables the input field, hides the prompt and timer, and shows the insult", async () => {
         render(<MeanKitty />);
     
         //simulate clicking the button
@@ -66,6 +69,9 @@ describe("When the timer reaches zero", () => {
         button = await screen.findByRole('button-enabled', undefined, { timeout: 6000 });
         //button should enable
         expect(button).toBeEnabled();
+        //input field disables
+        const input = screen.getByRole('textbox');
+        expect(input).toBeDisabled();
         //prompt and timer hide
         await waitFor(() => {
             const prompt = screen.queryByRole('prompt');
@@ -80,7 +86,7 @@ describe("When the timer reaches zero", () => {
 });
 
 describe("When the user types the prompt correctly before the timer reaches zero", () => {
-    it("enables the button, hides the prompt and timer, and shows the insult is purrr", async () => {
+    it("enables the button, hides the prompt and timer, shows the insult is purrr, and resets the input value to empty string", async () => {
         render(<MeanKitty />);
     
         //simulate clicking the button
@@ -97,6 +103,8 @@ describe("When the user types the prompt correctly before the timer reaches zero
 
         //button enables
         button = await screen.findByRole('button-enabled');
+        //input field disables
+        expect(input).toBeDisabled();
         //prompt and timer hide
         await waitFor(() => {
             const prompt = screen.queryByRole('prompt');
@@ -107,5 +115,7 @@ describe("When the user types the prompt correctly before the timer reaches zero
         //insult shows purrr
         const insult = await screen.findByRole('insult');
         expect(insult.innerHTML).toBe('purrr');
+        //input value is an empty string
+        expect(input).toHaveValue('');
     });
-});*/
+});
