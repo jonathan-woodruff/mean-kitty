@@ -1,6 +1,7 @@
 /* Login page */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Timer from './components/timer';
 import {
   CssBaseline,
   TextField,
@@ -12,7 +13,6 @@ import {
 } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { indigo } from '@mui/material/colors';
-import Countdown from 'react-countdown';
 
 
 function Copyright(props) {
@@ -43,6 +43,8 @@ const MeanKitty = () => {
     const [inputValue, setInputValue] = useState('');
     const [promptValue, setPromptValue] = useState('prompt bishhhhh');
     const [insultValue, setInsultValue] = useState('offensive insult');
+    const [promptActive, setPromptActive] = useState(false);
+    const [timeoutID, setTimeoutID] = useState(null);
 
     const handleChange = (e) => {
       const userInput = e.target.value;
@@ -55,6 +57,7 @@ const MeanKitty = () => {
         setInsultValue('purrr');
         setShowInsult(true);
         setInputValue('');
+        setPromptActive(false);
       }
     };
 
@@ -64,26 +67,25 @@ const MeanKitty = () => {
       setShowInsult(false);
       setShowPrompt(true);
       setShowTimer(true);
-
-      setTimeout(() => {
-        setButtonRole('button-enabled');
-        setInputEnabled(false);
-        setShowPrompt(false);
-        setShowTimer(false);
-        setShowInsult(true);
-        setInputValue('');
-      }, 5000)
+      setPromptActive(true);
     };
 
-    const renderer = ({ seconds, completed }) => {
-      if (completed) {
-        // Render a completed state
-        return <span>{'hi'}</span>
+    useEffect(() => {
+      if (promptActive) {
+        const tID = setTimeout(() => {
+          setButtonRole('button-enabled');
+          setInputEnabled(false);
+          setShowPrompt(false);
+          setShowTimer(false);
+          setShowInsult(true);
+          setInputValue('');
+          setPromptActive(false);
+        }, 5000);
+        setTimeoutID(tID);
       } else {
-        // Render a countdown
-        return <span>{seconds}</span>;
+        clearTimeout(timeoutID);
       }
-    };
+    }, [promptActive]);
 
     return (
       <ThemeProvider theme={theme}>
@@ -110,10 +112,7 @@ const MeanKitty = () => {
               { showPrompt ? <Typography role="prompt">{ promptValue }</Typography> : <></> }
               { showTimer
                 ?<Box role="timer">
-                  <Countdown 
-                    date={Date.now() + 5000} 
-                    renderer={ renderer }
-                  />
+                  <Timer startingSeconds={ 5 } />
                 </Box>
                 :<></>
               }

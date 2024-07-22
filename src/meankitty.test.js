@@ -4,21 +4,32 @@ import { waitFor, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 describe("When the page initializes", () => {
-    render(<MeanKitty />);
-
-    it("the button is enabled, the input field is disabled, the insult shows, and the prompt and timer are hidden", () => {
+    it("enables the button", () => {
+        render(<MeanKitty />);
         const button = screen.getByRole('button-enabled');
         expect(button).toBeEnabled();
+    });
 
+    it("disables the input field", () => {
+        render(<MeanKitty />);
         const input = screen.getByRole('textbox');
         expect(input).toBeDisabled();
+    });
 
+    it("shows the insult", () => {
+        render(<MeanKitty />);
         const insult = screen.getByRole('insult');
         expect(insult).toBeInTheDocument();
+    });
     
+    it("hides the prompt", () => {
+        render(<MeanKitty />);
         const prompt = screen.queryByRole('prompt');
         expect(prompt).not.toBeInTheDocument();
+    });
 
+    it("hides the timer", () => {
+        render(<MeanKitty />);
         const timer = screen.queryByRole('timer');
         expect(timer).not.toBeInTheDocument();
     });
