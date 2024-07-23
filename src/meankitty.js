@@ -1,7 +1,8 @@
 /* Login page */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Timer from './components/timer';
+import { getPrompt, getInsult } from './utils/index';
 import {
   CssBaseline,
   TextField,
@@ -41,9 +42,8 @@ const MeanKitty = () => {
     const [showTimer, setShowTimer] = useState(false);
     const [inputEnabled, setInputEnabled] = useState(false);
     const [inputValue, setInputValue] = useState('');
-    const [promptValue, setPromptValue] = useState('prompt bishhhhh');
-    const [insultValue, setInsultValue] = useState('offensive insult');
-    const [promptActive, setPromptActive] = useState(false);
+    const [promptValue, setPromptValue] = useState('');
+    const [insultValue, setInsultValue] = useState('I\'m a nice kitty, meow.');
     const [timeoutID, setTimeoutID] = useState(null);
 
     const handleChange = (e) => {
@@ -57,35 +57,29 @@ const MeanKitty = () => {
         setInsultValue('purrr');
         setShowInsult(true);
         setInputValue('');
-        setPromptActive(false);
+        clearTimeout(timeoutID);
       }
     };
 
     const handleClick = () => {
       setButtonRole('button-disabled');
+      setPromptValue(getPrompt());
       setInputEnabled(true);
       setShowInsult(false);
       setShowPrompt(true);
       setShowTimer(true);
-      setPromptActive(true);
+      
+      const tID = setTimeout(() => {
+        setButtonRole('button-enabled');
+        setInputEnabled(false);
+        setShowPrompt(false);
+        setShowTimer(false);
+        setInsultValue(getInsult());
+        setShowInsult(true);
+        setInputValue('');
+      }, 5000);
+      setTimeoutID(tID);
     };
-
-    useEffect(() => {
-      if (promptActive) {
-        const tID = setTimeout(() => {
-          setButtonRole('button-enabled');
-          setInputEnabled(false);
-          setShowPrompt(false);
-          setShowTimer(false);
-          setShowInsult(true);
-          setInputValue('');
-          setPromptActive(false);
-        }, 5000);
-        setTimeoutID(tID);
-      } else {
-        clearTimeout(timeoutID);
-      }
-    }, [promptActive]);
 
     return (
       <ThemeProvider theme={theme}>
@@ -125,7 +119,7 @@ const MeanKitty = () => {
                 name="typing-area"
                 value={ inputValue }
                 onChange={ (e) => handleChange(e) }
-                autoFocus
+                inputRef={input => input && input.focus()}
                 disabled={ !inputEnabled }
               />
               <Button variant="contained" disabled={ buttonRole === 'button-enabled' ? false : true } role={ buttonRole } onClick={ handleClick }>Pet the kitty</Button>

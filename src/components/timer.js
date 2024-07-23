@@ -32,7 +32,7 @@ const Timer = ({ startingSeconds }) => {
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <Box sx={{ border: 1, borderRadius: '50%', borderColor: 'gray', width: '50px', backgroundColor: '#222222', textAlign: 'center' }}>
-                    <Typography component="body1" variant="h4" sx={{ color: 'white' }}>{ secondsLeft }</Typography>
+                    <Typography paragraph variant="h4" sx={{ color: 'white' }}>{ secondsLeft }</Typography>
                 </Box>
             </Container>
         </ThemeProvider>
