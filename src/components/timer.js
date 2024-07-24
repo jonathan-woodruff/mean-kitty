@@ -31,8 +31,8 @@ const Timer = ({ startingSeconds }) => {
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
-                <Box sx={{ border: 1, borderRadius: '50%', borderColor: 'gray', width: '50px', backgroundColor: '#222222', textAlign: 'center' }}>
-                    <Typography paragraph variant="h4" sx={{ color: 'white' }}>{ secondsLeft }</Typography>
+                <Box sx={{ width: '40px', textAlign: 'center', mt: 2 }}>
+                    <Typography paragraph variant="h6" sx={{ border: 1, borderRadius: '50%', borderColor: 'gray' }}>{ secondsLeft }</Typography>
                 </Box>
             </Container>
         </ThemeProvider>

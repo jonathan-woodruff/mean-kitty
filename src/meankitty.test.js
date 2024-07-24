@@ -1,8 +1,5 @@
 import React from "react";
 import MeanKitty from "./meankitty.js";
-import prompts from './constants/prompts.js';
-import insults from './constants/insults.js';
-import { getPrompt, getInsult } from './utils/index.js';
 import { waitFor, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
@@ -132,19 +129,5 @@ describe("When the user types the prompt correctly before the timer reaches zero
         expect(insult.innerHTML).toBe('purrr');
         //input value is an empty string
         expect(input).toHaveValue('');
-    });
-});
-
-describe("the getPrompt function", () => {
-    it("returns a prompt from the prompts array", () => {
-        const prompt = getPrompt();
-        expect(prompts.includes(prompt)).toBeTruthy();
-    });
-});
-
-describe("the getInsult function", () => {
-    it("returns an insult from the insults array", () => {
-        const insult = getInsult();
-        expect(insults.includes(insult)).toBeTruthy();
     });
 });

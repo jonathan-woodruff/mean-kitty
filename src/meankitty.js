@@ -90,39 +90,45 @@ const MeanKitty = () => {
               marginTop: 8,
               display: 'flex',
               flexDirection: 'column',
-              alignItems: 'center',
+              alignItems: 'center'
             }}
           >
-            <Typography component="h1" variant="h2">
+            <Typography component="h1" variant="h3">
               Mean Kitty
             </Typography>
-            <Box component="form" noValidate sx={{ mt: 1 }}>
+            <Box component="form" noValidate sx={{ mt: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
               <img 
                 src={ `/images/cat-face-2.png` }
                 alt={ "Face of a cat" }
                 style={{ width: '100%' }}
               />
-              { showInsult ? <Typography role="insult">{ insultValue }</Typography> : <></> }
-              { showPrompt ? <Typography role="prompt">{ promptValue }</Typography> : <></> }
               { showTimer
                 ?<Box role="timer">
                   <Timer startingSeconds={ 5 } />
                 </Box>
                 :<></>
               }
+              { showInsult ? <Typography role="insult" sx={{ my: 2 }}>Kitty says: { insultValue }</Typography> : <></> }
+              { showPrompt ? <Typography role="prompt" sx={{ my: 2 }}>Type this: { promptValue }</Typography> : <></> }
               <TextField
                 margin="normal"
-                required
                 fullWidth
                 id="typing-area"
-                label="Type what Mean Kitty says before the time runs out!"
+                label="Type fast, bish"
                 name="typing-area"
                 value={ inputValue }
                 onChange={ (e) => handleChange(e) }
                 inputRef={input => input && input.focus()}
                 disabled={ !inputEnabled }
               />
-              <Button variant="contained" disabled={ buttonRole === 'button-enabled' ? false : true } role={ buttonRole } onClick={ handleClick }>Pet the kitty</Button>
+              <Button 
+                variant="contained" 
+                disabled={ buttonRole === 'button-enabled' ? false : true } 
+                role={ buttonRole } 
+                onClick={ handleClick }
+              >
+                Pet the kitty
+              </Button>
             </Box>
           </Box>
           <Copyright sx={{ mt: 8, mb: 4 }} />
