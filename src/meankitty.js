@@ -72,11 +72,11 @@ const MeanKitty = () => {
       const tID = setTimeout(() => {
         setButtonRole('button-enabled');
         setInputEnabled(false);
+        setInputValue('');
         setShowPrompt(false);
         setShowTimer(false);
         setInsultValue(getInsult());
         setShowInsult(true);
-        setInputValue('');
       }, 5000);
       setTimeoutID(tID);
     };
@@ -95,6 +95,9 @@ const MeanKitty = () => {
           >
             <Typography component="h1" variant="h3">
               Mean Kitty
+            </Typography>
+            <Typography component="h2" variant="h6" sx={{ mb: 2 }}>
+              A dark and offensive typing game
             </Typography>
             <Box component="form" noValidate sx={{ mt: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
               <img 
